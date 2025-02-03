@@ -6,6 +6,11 @@ pipeline {
     }
   }
   stages {
+    stage('Cleanup') {
+      steps {
+        sh 'rm -rf *'
+      }
+    }
     stage('Checkout') {
       steps {
         sh 'echo passed'
