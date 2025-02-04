@@ -49,38 +49,29 @@ pipeline {
       }
     }
     stage('Update Deployment File') {
-      environment {
-        GIT_REPO_NAME = "Jenkins-CICD-pipeline"
-        GIT_USER_NAME = "leju-b"
-      }
-      steps {
-        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-          sh '''
-              # Configure Git user settings
-              git config user.email "iamleju02@gmail.com"
-              git config user.name "leju-b"
-              
-              # Ensure the repository is in a clean state (discard any local changes)
-              git checkout -f
-              
-              # Use sed to update the image tag in the deployment manifest.
-              # This regex captures the fixed portion of the image line and replaces the tag.
-              sed -i 's#\\(image: lejub02/ultimate-cicd-pipeline:\\).*#\\1${BUILD_NUMBER}#' spring-boot-app-manifests/deployment.yml
-              
-              # For debugging, display the updated file
-              cat spring-boot-app-manifests/deployment.yml
-              
-              # Stage the changes
-              git add spring-boot-app-manifests/deployment.yml
-              
-              # Commit the changes (if any changes are present)
-              git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
-              
-              # Push the updated manifest to the Git repository so GitOps (e.g., Argo CD) can deploy it
-              git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-          '''
-        }
+    environment {
+      GIT_REPO_NAME = "Jenkins-CICD-pipeline"
+      GIT_USER_NAME = "leju-b"
+    }
+    steps {
+       withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+        sh '''
+            git config --global user.email "iamleju02@gmail.com"
+            git config --global user.name "leju-b"
+          
+            git checkout main || git checkout -b main
+            git pull origin main
+
+            sed -i "s#\\(image: lejub02/ultimate-cicd-pipeline:\\).*#\\1${BUILD_NUMBER}#" spring-boot-app-manifests/deployment.yml
+          
+            cat spring-boot-app-manifests/deployment.yml  # Debugging step to confirm change
+
+            git add spring-boot-app-manifests/deployment.yml
+            git commit -m "Update deployment image to version ${BUILD_NUMBER}" || echo "No changes to commit"
+            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+        '''
       }
     }
+  }
   } // End of stages
 } // End of pipeline
