@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: lejub02/ultimate-cicd-pipeline:${BUILD_NUMBER}
+        image: lejub02/ultimate-cicd-pipeline:38
         ports:
         - containerPort: 8080
 
