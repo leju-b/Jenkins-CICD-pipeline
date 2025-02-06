@@ -1,7 +1,5 @@
 # 🚀 Jenkins CI/CD Pipeline for a Spring Boot Application
 
-![Screenshot 2023-03-28 at 9 38 09 PM](https://user-images.githubusercontent.com/43399466/228301952-abc02ca2-9942-4a67-8293-f76647b6f9d8.png)
-
 ## 📌 Introduction
 This repository contains a **fully automated CI/CD pipeline** for a **Java Spring Boot** application, integrating **Jenkins, Docker, SonarQube, Kubernetes, and ArgoCD**. The pipeline ensures automated **code quality checks, containerization, and deployment** to a Kubernetes cluster.
 
@@ -130,7 +128,7 @@ If you're learning **DevOps**, I highly recommend his content! 🔥
 ---
 
 ## 📢 Let's Connect!
-If you found this project useful, let's connect on **[LinkedIn](https://linkedin.com/in/your-profile)**! 🚀
+If you found this project useful, let's connect on **[LinkedIn](https://www.linkedin.com/in/lejub02/)**! 🚀
 
 ---
 
